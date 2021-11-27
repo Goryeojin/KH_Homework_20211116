@@ -1,36 +1,42 @@
 package com.kh.hw.member.controller;
 
+import java.util.ArrayList;
+
 import com.kh.hw.member.model.vo.Member;
 
 public class MemberController {
 
-	private Member[] m = new Member[SIZE];
 	public static final int SIZE = 10;
+	private Member[] m = new Member[SIZE];
 
-	public int existMemberNum() {
+	public int existMember() {
+
 		int count = 0;
+
 		for (int i = 0; i < m.length; i++) {
 			if (m[i] != null) {
 				count++;
 			}
 		}
+
 		return count;
 	}
 
-	public Boolean checkId(String inputId) {
+	public boolean checkId(String inputId) {
 		boolean check = false;
 		for (int i = 0; i < m.length; i++) {
-			if (m[i] != null) {
-				if (inputId.equals(m[i].getId())) {
-					check = true;
-					break;
-				}
+			if (m[i] != null && inputId.equals(m[i].getId())) {
+				check = true;
+				break;
 			}
+
 		}
+
 		return check;
 	}
 
 	public void insertMember(String id, String name, String password, String email, char gender, int age) {
+
 		for (int i = 0; i < m.length; i++) {
 			if (m[i] == null) {
 				m[i] = new Member(id, name, password, email, gender, age);
@@ -40,108 +46,117 @@ public class MemberController {
 
 	}
 
-	public String searchId(String id) {
-		String info = null;
+	public Member searchId(String id) {
+
+		Member returnM = null;
+
 		for (int i = 0; i < m.length; i++) {
-			if (m[i] != null && id.equals(m[i].getId())) {
-				info = m[i].inform();
+			if (m[i] != null && m[i].getId().equals(id)) {
+				returnM = m[i];
 			}
 		}
-		return info;
+
+		return returnM;
 	}
 
-	public Member[] searchName(String name) {
-		boolean exist = false;
-		Member[] mem = new Member[m.length];
+	public ArrayList<Member> searchName(String name) {
+
+		ArrayList<Member> list = new ArrayList<>();
+
 		for (int i = 0; i < m.length; i++) {
-			if (m[i] != null && name.equals(m[i].getName())) {
-				mem[i] = m[i];
-				exist = true;
+			if (m[i] != null && m[i].getName().equals(name)) {
+				list.add(m[i]);
 			}
 		}
-		if (exist == false) {
-			mem = null;
-		}
-		return mem;
+
+		return list;
 	}
 
-	public Member[] searchEmail(String email) {
-		boolean exist = false;
-		Member[] mem = new Member[m.length];
+	public Member searchEmail(String email) {
+
+		Member returnM = null;
+
 		for (int i = 0; i < m.length; i++) {
-			if (m[i] != null && email.equals(m[i].getEmail())) {
-				mem[i] = m[i];
-				exist = true;
+			if (m[i] != null && m[i].getEmail().equals(email)) {
+				returnM = m[i];
 			}
-
 		}
 
-		if (exist == false) {
-			mem = null;
-		}
-		return mem;
-
+		return returnM;
 	}
 
-	public Boolean updatePassword(String id, String password) {
-		boolean same = false;
+	public int updatePassword(String id, String password) {
+
+		int result = 0;
+
 		for (int i = 0; i < m.length; i++) {
-			if (m[i] != null && id.equals(m[i].getId())) {
+			if (m[i] != null && m[i].getId().equals(id)) {
 				m[i].setPassword(password);
-				same = true;
+				result++;
 				break;
 			}
-
 		}
-		return same;
+
+		return result;
 	}
 
-	public Boolean updateName(String id, String name) {
-		boolean same = false;
+	public int updateName(String id, String name) {
+		int result = 0;
+
 		for (int i = 0; i < m.length; i++) {
-			if (m[i] != null && id.equals(m[i].getId())) {
-				m[i].setName(name);
-				same = true;
+			if (m[i] != null && m[i].getId().equals(id)) {
+				m[i].setPassword(name);
+				result++;
 				break;
 			}
-
 		}
-		return same;
+
+		return result;
 	}
 
-	public Boolean updateEmail(String id, String email) {
-		boolean same = false;
+	public int updateEmail(String id, String email) {
+		int result = 0;
+
 		for (int i = 0; i < m.length; i++) {
-			if (m[i] != null && id.equals(m[i].getId())) {
-				m[i].setEmail(email);
-				same = true;
+			if (m[i] != null && m[i].getId().equals(id)) {
+				m[i].setPassword(email);
+				result++;
 				break;
 			}
-
 		}
-		return same;
+
+		return result;
 	}
 
-	public Boolean delete(String id) {
-		boolean delete = false;
-		for (int i = 0; i < m.length; i++) {
-			if (id.equals(m[i].getId())) {
+	public int delete(String id) {
+		
+		int result = 0;
+		for(int i=0; i<m.length; i++) {
+			if(m[i]!=null && m[i].getId().equals(id)) {
 				m[i] = null;
-				delete = true;
+				result++;
 				break;
 			}
 		}
-		return delete;
+		
+		return result;
 	}
 
 	public void delete() {
-
-		m = new Member[SIZE];
-
+		
+		m = null;
+		
 	}
 
-	public Member[] printAll() {
-		return m;
+	public ArrayList<Member> printAll() {
+		
+		ArrayList<Member> list = new ArrayList<>();
+		for(int i=0; i<m.length; i++) {
+			if(m[i]!=null)
+				list.add(m[i]);
+		}
+		
+		return list;
 	}
 
 }

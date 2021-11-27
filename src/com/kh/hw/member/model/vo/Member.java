@@ -8,11 +8,11 @@ public class Member {
 	private String email;
 	private char gender;
 	private int age;
-	
-	
 	public Member() {
+		super();
 	}
 	public Member(String id, String name, String password, String email, char gender, int age) {
+		super();
 		this.id = id;
 		this.name = name;
 		this.password = password;
@@ -20,8 +20,6 @@ public class Member {
 		this.gender = gender;
 		this.age = age;
 	}
-	
-	
 	public String getId() {
 		return id;
 	}
@@ -58,11 +56,12 @@ public class Member {
 	public void setAge(int age) {
 		this.age = age;
 	}
-	
-	public String inform() {
-		
-		return id + " " + name + " " + password + " " + email + " " + gender + " " + age;
+	@Override
+	public String toString() {
+		return "Member [id=" + id + ", name=" + name + ", password=" + password + ", email=" + email + ", gender="
+				+ gender + ", age=" + age + "]";
 	}
+	
 	
 
 }
